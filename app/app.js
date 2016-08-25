@@ -1,6 +1,7 @@
 import { remote, ipcRenderer } from 'electron';
 import fs from 'fs';
 import path from 'path';
+import _ from 'underscore';
 
 // Lightgallery components
 import { lightGallery } from './lightGallery/js/lightgallery.js';
@@ -128,6 +129,16 @@ fs.readFile(app.getPath('userData') + '/lg-config.json', function(err, data) {
     }
 });
 
+/**
+ * List contains permitted file extensions
+ * @type {Array}
+ */
+var listExt = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+
+/**
+ * Array contains all imported images
+ * @type {Array}
+ */
 var el = [];
 
 /**
@@ -140,7 +151,8 @@ var loadFiles = function(dir, file) {
         var _images = [];
         if (files && files.length) {
             for (var i = 0; i < files.length; i++) {
-                if (path.extname(files[i]).toLowerCase() === '.jpg' || path.extname(files[i]).toLowerCase() === '.png' || path.extname(files[i]).toLowerCase() === '.gif' || path.extname(files[i]).toLowerCase() === '.webp') {
+                let fileExt = path.extname(files[i]).toLowerCase();
+                if ( isInListExt(listExt, fileExt) ) {
                     el.push({
                         src: dir + '\\' + files[i],
                         thumb: './lightgallery/img/lg-default.png'
@@ -155,7 +167,7 @@ var loadFiles = function(dir, file) {
             _index = 0;
         }
 
-        if ($.isArray(el) && el.length) {
+        if (_.isArray(el) && el.length) {
 
             if ($('.lightgallery').data('lightGallery')) {
                 $('.lightgallery').data('lightGallery').destroy(true);
@@ -171,11 +183,16 @@ var loadFiles = function(dir, file) {
     });
 };
 
+/**
+ * @desc Get File from specific files
+ * @param  {array} files        
+ */
 var getFiles = function(files) {
     el = [];
     if (files && files.length) {
         for (var i = 0; i < files.length; i++) {
-            if (path.extname(files[i].path || files[i]).toLowerCase() === '.jpg' || path.extname(files[i].path || files[i]).toLowerCase() === '.png' || path.extname(files[i].path || files[i]).toLowerCase() === '.gif' || path.extname(files[i].path || files[i]).toLowerCase() === '.webp') {
+            let fileExt = path.extname(files[i].path || files[i]).toLowerCase();
+            if ( isInListExt(listExt, fileExt) ) {
                 el.push({
                     src: files[i].path || files[i],
                     thumb: './lightgallery/img/lg-default.png'
@@ -222,6 +239,15 @@ var reload = function() {
         }, 100);
     });
 };
+
+/**
+ * @desc Check ext is in list allowed extensions or not
+ * @param  {string}  ext - file extension that might be checked
+ * @return {Boolean}     
+ */
+var isInListExt = function(ext) {
+    return _.contains(listExt, ext);
+}
 
 document.addEventListener('dragover', function(event) {
     event.preventDefault();

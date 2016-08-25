@@ -1,10 +1,10 @@
 {
-  "name": "lightgallery",
-  "productName": "Lightgallery",
-  "identifier": "lightgallery-desktop",
-  "description": "A modern, electron and nodejs based image viewer for Mac, Windows and Linux.",
-  "version": "0.1.1",
-  "author": "Sachin N <sachi77n@gmail.com>",
+  "name": "FliGal",
+  "productName": "FliGal",
+  "identifier": "Flickr Gallery",
+  "description": "A modern, electron and nodejs based image viewer for Mac, Windows and Linux. Make Flickr users feel free to enjoy the pics",
+  "version": "1.0.0",
+  "author": "Cong Pham <cse.thanhcong@gmail.com>",
   "main": "background.js",
   "dependencies": {
     "configstore": "^1.4.0",

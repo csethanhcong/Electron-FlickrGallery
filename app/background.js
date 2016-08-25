@@ -1,7 +1,4 @@
-import {
-    app, BrowserWindow, Menu, dialog
-}
-from 'electron';
+import { app, BrowserWindow, Menu, dialog } from 'electron';
 import windowStateKeeper from './vendor/electron_boilerplate/window_state';
 import env from './env';
 import fs from 'fs';
@@ -155,12 +152,13 @@ var setDevMenu = function() {
         label: 'File',
         submenu: [{
             label: 'Open',
+            accelerator: 'CmdOrCtrl+O',
             click: function() {
                 dialog.showOpenDialog({
                     properties: ['openFile', 'multiSelections'],
                     filters: [{
                         name: 'Images',
-                        extensions: ['jpg', 'png', 'gif', 'webp']
+                        extensions: ['jpg', 'jpeg', 'png', 'gif', 'webp']
                     }]
                 }, function(files) {
                     mainWindow.webContents.send('openedFiles', files);
@@ -168,12 +166,13 @@ var setDevMenu = function() {
             }
         }, {
             label: 'Open directory',
+            accelerator: 'CmdOrCtrl+Shift+O',
             click: function() {
                 dialog.showOpenDialog({
                     properties: ['openDirectory'],
                     filters: [{
                         name: 'Images',
-                        extensions: ['jpg', 'png', 'gif', 'webp']
+                        extensions: ['jpg', 'jpeg', 'png', 'gif', 'webp']
                     }]
                 }, function(directory) {
                     mainWindow.webContents.send('openDirectory', directory);
@@ -1375,27 +1374,27 @@ var setDevMenu = function() {
         submenu: [{
             label: 'Github',
             click: function() {
-                require('electron').shell.openExternal('https://github.com/sachinchoolur/lightgallery-desktop');
+                require('electron').shell.openExternal('https://github.com/csethanhcong/Electron-FlickrGallery');
             }
         }, {
-            label: 'Website',
+            label: 'Facebook',
             click: function() {
-                require('electron').shell.openExternal('http://sachinchoolur.github.io/lightgallery-desktop/');
+                require('electron').shell.openExternal('https://www.facebook.com/cse.thanhcong');
             }
         }, {
             label: 'Report issues',
             click: function() {
-                require('electron').shell.openExternal('https://github.com/sachinchoolur/lightgallery-desktop/issues');
+                require('electron').shell.openExternal('https://github.com/csethanhcong/Electron-FlickrGallery/issues');
             }
         }, {
             label: 'Pull requests',
             click: function() {
-                require('electron').shell.openExternal('https://github.com/sachinchoolur/lightgallery-desktop/pulls');
+                require('electron').shell.openExternal('https://github.com/csethanhcong/Electron-FlickrGallery/pulls');
             }
         }, {
             label: 'Author',
             click: function() {
-                require('electron').shell.openExternal('https://twitter.com/sachinchoolur');
+                require('electron').shell.openExternal('https://www.facebook.com/cse.thanhcong');
             }
         }, {
             label: 'Developement',
@@ -1407,7 +1406,7 @@ var setDevMenu = function() {
                 }
             }, {
                 label: 'Toggle DevTools',
-                accelerator: 'Alt+CmdOrCtrl+I',
+                accelerator: 'CmdOrCtrl+Alt+I',
                 click: function() {
                     BrowserWindow.getFocusedWindow().toggleDevTools();
                 }
