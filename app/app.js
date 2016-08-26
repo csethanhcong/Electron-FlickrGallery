@@ -152,6 +152,7 @@ var loadFiles = function(dir, file) {
         if (files && files.length) {
             for (var i = 0; i < files.length; i++) {
                 let fileExt = path.extname(files[i]).toLowerCase();
+                console.log(isInListExt(listExt, fileExt));
                 if ( isInListExt(listExt, fileExt) ) {
                     el.push({
                         src: dir + '\\' + files[i],
@@ -245,7 +246,7 @@ var reload = function() {
  * @param  {string}  ext - file extension that might be checked
  * @return {Boolean}     
  */
-var isInListExt = function(ext) {
+function isInListExt(listExt, ext) {
     return _.contains(listExt, ext);
 }
 

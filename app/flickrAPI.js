@@ -47,5 +47,3 @@ function search(keyword) {
 	  }
 	})
 }
-
-search('hello');

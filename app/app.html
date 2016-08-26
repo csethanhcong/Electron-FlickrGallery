@@ -1,35 +1,81 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>FliGal</title>
+    <!doctype html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>FliGal</title>
 
-    <link href="./stylesheets/main.css" rel="stylesheet" type="text/css">
-    <link href="lightgallery/css/lightgallery.css" rel="stylesheet" type="text/css">
-    <link href="lightgallery/css/lg-transitions.css" rel="stylesheet" type="text/css">
+        <link href="stylesheets/main.css" rel="stylesheet" type="text/css">
+        <link href="lightgallery/css/lightgallery.css" rel="stylesheet" type="text/css">
+        <link href="lightgallery/css/lg-transitions.css" rel="stylesheet" type="text/css">
+        <link href="vendor/bootstrap-3.3.7/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="vendor/font-awesome-4.6.3/font-awesome-4.6.3/css/font-awesome.css" rel="stylesheet" type="text/css">
+        <link href="vendor/photon-0.1.2-dist/photon-0.1.2-dist/css/photon.css" rel="stylesheet" type="text/css">
 
-    <script type="text/javascript">window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.js');</script>
+        <script type="text/javascript">window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.js');</script>
 
-    <!--
-    <script src="lightgallery/js/lightgallery.js"></script>
-    <script src="lightgallery/js/lg-thumbnail.js"></script>
-    <script src="lightgallery/js/lg-zoom.js"></script>
-    <script src="lightgallery/js/lg-autoplay.js"></script>
-    <script src="lightgallery/js/lg-pager.js"></script>
-    <script src="lightgallery/js/mousewheel.js"></script>
-    -->
+        <!--
+        <script src="lightgallery/js/lightgallery.js"></script>
+        <script src="lightgallery/js/lg-thumbnail.js"></script>
+        <script src="lightgallery/js/lg-zoom.js"></script>
+        <script src="lightgallery/js/lg-autoplay.js"></script>
+        <script src="lightgallery/js/lg-pager.js"></script>
+        <script src="lightgallery/js/mousewheel.js"></script>
+        -->
 
 
-    <script src="vendor/electron_boilerplate/context_menu.js"></script>
-    <script src="vendor/electron_boilerplate/external_links.js"></script>
+        <script src="vendor/electron_boilerplate/context_menu.js"></script>
+        <script src="vendor/electron_boilerplate/external_links.js"></script>
+        <script src="vendor/bootstrap-3.3.7/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 
-    <script src="app.js"></script>
-</head>
-<body>
-	<div class="lg-drag-drop">
-        <img src="images/drag_and_drop.png">
-		<p>Drag and drop images here</p>
-	</div>
-	<div class="lightgallery"></div>
-</body>
-</html>
+        <script src="app.js"></script>
+    </head>
+    <body>
+
+        <!-- Nav -->
+        <div class="sidebar">
+            <div class="sidebar-nav">
+                <nav class="nav-group">
+                    <form>
+                      <div class="nav-group-item inner-addon right-addon">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="icon icon-search"></span>
+                      </div>
+                      
+                    </form>
+                </nav>
+            </div>
+            <div class="sidebar-list">
+                <ul class="list-group">
+                  <li class="list-group-header">
+                    <input class="form-control" type="text" placeholder="Search for someone">
+                  </li>
+                  <li class="list-group-item">
+                    <img class="img-circle media-object pull-left" src="/assets/img/avatar.jpg" width="32" height="32">
+                    <div class="media-body">
+                      <strong>List item title</strong>
+                      <p>Lorem ipsum dolor sit amet.</p>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <img class="img-circle media-object pull-left" src="/assets/img/avatar2.png" width="32" height="32">
+                    <div class="media-body">
+                      <strong>List item title</strong>
+                      <p>Lorem ipsum dolor sit amet.</p>
+                    </div>
+                  </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Nav -->
+
+
+
+
+        <!-- <div class="lg-drag-drop">
+            <img src="images/drag_and_drop.png">
+            <p>Drag and drop images here</p>
+        </div>
+        <div class="lightgallery"></div> -->
+    	
+    </body>
+    </html>
