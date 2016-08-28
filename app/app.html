@@ -7,9 +7,9 @@
         <link href="stylesheets/main.css" rel="stylesheet" type="text/css">
         <link href="lightgallery/css/lightgallery.css" rel="stylesheet" type="text/css">
         <link href="lightgallery/css/lg-transitions.css" rel="stylesheet" type="text/css">
-        <link href="vendor/bootstrap-3.3.7/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
         <link href="vendor/font-awesome-4.6.3/font-awesome-4.6.3/css/font-awesome.css" rel="stylesheet" type="text/css">
-        <link href="vendor/photon-0.1.2-dist/photon-0.1.2-dist/css/photon.css" rel="stylesheet" type="text/css">
+        <!-- <link href="vendor/photon-0.1.2-dist/photon-0.1.2-dist/css/photon.css" rel="stylesheet" type="text/css"> -->
 
         <script type="text/javascript">window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.js');</script>
 
@@ -25,7 +25,7 @@
 
         <script src="vendor/electron_boilerplate/context_menu.js"></script>
         <script src="vendor/electron_boilerplate/external_links.js"></script>
-        <script src="vendor/bootstrap-3.3.7/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
         <script src="app.js"></script>
     </head>
@@ -67,15 +67,30 @@
             </div>
         </div> -->
         <!-- End Nav -->
+        
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <form>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                      </div>
+                    </form>   
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <div id="gallery"></div>
+                    <div class="lightgallery"></div>
+                </div>
+            </div>
+        </div>
 
 
-
-
-        <div class="lg-drag-drop">
+        <!-- <div class="lg-drag-drop">
             <img src="images/drag_and_drop.png">
             <p>Drag and drop images here</p>
         </div>
-        <div class="lightgallery"></div>
+        <div class="lightgallery"></div> -->
     	
     </body>
     </html>

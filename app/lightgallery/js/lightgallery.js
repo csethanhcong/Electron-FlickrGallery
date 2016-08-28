@@ -148,11 +148,11 @@
 
             _this.index = parseInt(_hash.split('&slide=')[1], 10);
 
-            $('body').addClass('lg-from-hash');
-            if (!$('body').hasClass('lg-on')) {
+            $('#gallery').addClass('lg-from-hash');
+            if (!$('#gallery').hasClass('lg-on')) {
                 setTimeout(function() {
                     _this.build(_this.index);
-                    $('body').addClass('lg-on');
+                    $('#gallery').addClass('lg-on');
                 });
             }
         }
@@ -164,10 +164,10 @@
             _this.index = _this.s.index || 0;
 
             // prevent accidental double execution
-            if (!$('body').hasClass('lg-on')) {
+            if (!$('#gallery').hasClass('lg-on')) {
                 setTimeout(function() {
                     _this.build(_this.index);
-                    $('body').addClass('lg-on');
+                    $('#gallery').addClass('lg-on');
                 });
             }
         } else {
@@ -188,9 +188,9 @@
                 _this.index = _this.s.index || _this.$items.index(this);
 
                 // prevent accidental double execution
-                if (!$('body').hasClass('lg-on')) {
+                if (!$('#gallery').hasClass('lg-on')) {
                     _this.build(_this.index);
-                    $('body').addClass('lg-on');
+                    $('#gallery').addClass('lg-on');
                 }
             });
         }
@@ -259,7 +259,7 @@
         var template;
         var _this = this;
 
-        $('body').append('<div class="lg-backdrop"></div>');
+        $('#gallery').append('<div class="lg-backdrop"></div>');
         $('.lg-backdrop').css('transition-duration', this.s.backdropDuration + 'ms');
 
         // Create gallery items
@@ -290,7 +290,7 @@
             '</div>' +
             '</div>';
 
-        $('body').append(template);
+        $('#gallery').append(template);
         this.$outer = $('.lg-outer');
         this.$slide = this.$outer.find('.lg-item');
 
@@ -676,7 +676,7 @@
 
             // Do not change the delay value because it is required for zoom plugin.
             // If gallery opened from direct url (hash) speed value should be 0
-            if (delay && !$('body').hasClass('lg-from-hash')) {
+            if (delay && !$('#gallery').hasClass('lg-from-hash')) {
                 _speed = delay;
             }
 
@@ -1253,7 +1253,7 @@
         clearTimeout(_this.hideBartimeout);
         this.hideBartimeout = false;
         $(window).off('.lg');
-        $('body').removeClass('lg-on lg-from-hash');
+        $('#gallery').removeClass('lg-on lg-from-hash');
 
         if (_this.$outer) {
             _this.$outer.removeClass('lg-visible');

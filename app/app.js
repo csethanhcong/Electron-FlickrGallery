@@ -152,7 +152,6 @@ var loadFiles = function(dir, file) {
         if (files && files.length) {
             for (var i = 0; i < files.length; i++) {
                 let fileExt = path.extname(files[i]).toLowerCase();
-                console.log(isInListExt(listExt, fileExt));
                 if ( isInListExt(listExt, fileExt) ) {
                     el.push({
                         src: dir + '\\' + files[i],
@@ -252,26 +251,26 @@ function isInListExt(listExt, ext) {
 
 document.addEventListener('dragover', function(event) {
     event.preventDefault();
-    $('body').addClass('lg-drag-over');
+    $('#gallery').addClass('lg-drag-over');
     return false;
 }, false);
 
 document.addEventListener('drop', function(event) {
     event.preventDefault();
     getFiles(event.dataTransfer.files);
-    $('body').removeClass('lg-drag-over');
+    $('#gallery').removeClass('lg-drag-over');
     return false;
 }, false);
 
 document.addEventListener('dragleave', function(event) {
     event.preventDefault();
-    $('body').removeClass('lg-drag-over');
+    $('#gallery').removeClass('lg-drag-over');
     return false;
 }, false);
 
 document.addEventListener('dragexit', function(event) {
     event.preventDefault();
-    $('body').removeClass('lg-drag-over');
+    $('#gallery').removeClass('lg-drag-over');
     return false;
 }, false);
 

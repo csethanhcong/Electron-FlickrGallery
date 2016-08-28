@@ -107,6 +107,12 @@ var lessTask = function () {
 gulp.task('less', ['clean'], lessTask);
 gulp.task('less-watch', lessTask);
 
+var lessDependenciesTask = function () {
+    return gulp.src('app/vendor/bootstrap-3.3.7/bootstrap-3.3.7/less/bootstrap.less')
+    .pipe(less())
+    .pipe(gulp.dest(destDir.path('stylesheets')));
+};
+gulp.task('lessDependencies', lessDependenciesTask);
 
 gulp.task('finalize', ['clean'], function () {
     var manifest = srcDir.read('package.json', 'json');
@@ -140,4 +146,4 @@ gulp.task('watch', function () {
 });
 
 
-gulp.task('build', ['bundle', 'less', 'copy', 'finalize']);
+gulp.task('build', ['bundle', 'less', 'lessDependencies', 'copy', 'finalize']);
