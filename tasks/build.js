@@ -20,7 +20,7 @@ var paths = {
         './vendor/**',
         './lightgallery/**',
         './**/*.html',
-        './**/*.+(jpg|png|svg)'
+        './**/*.+(jpg|png|svg|gif)'
     ],
 }
 

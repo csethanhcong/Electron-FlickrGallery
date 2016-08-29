@@ -36,14 +36,39 @@ function authenticate() {
 		// });
 		
 	});
-}
+};
 
-function search(keyword) {
-	var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + flickrOptions.api_key + '&tags=' + encodeURIComponent(keyword) + '&format=json&nojsoncallback=1';
+module.exports.search = function(data, func) {
+	let perPage = (data.perPage) ? data.perPage : 10;
+	let keyword = data.keyword;
+	// let apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + flickrOptions.api_key + '&tags=' + encodeURIComponent(keyword) + '&format=json&nojsoncallback=1';
+	let apiUrl = ' https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + flickrOptions.api_key + '&tags=' + encodeURIComponent(keyword) + '&privacy_filter=1&per_page=' + perPage + '&format=json&nojsoncallback=1';
 	
 	request(apiUrl, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
-	    console.dir(body);
+	    if (func) {
+	    	if (typeof body !== 'object') {
+	    		func.call(this, JSON.parse(body));
+	    	} else {
+	    		func.call(this, body);
+	    	}
+	    }
 	  }
-	})
-}
+	});
+};
+
+module.exports.getSize = function(photo_id) {
+	let apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=' + flickrOptions.api_key + '&photo_id=' + photo_id + '&format=json&nojsoncallback=1';
+
+	request(apiUrl, function (error, response, body) {
+	  if (!error && response.statusCode == 200) {
+	    if (func) {
+	    	if (typeof body !== 'object') {
+	    		func.call(this, JSON.parse(body));
+	    	} else {
+	    		func.call(this, body);
+	    	}
+	    }
+	  }
+	});
+};

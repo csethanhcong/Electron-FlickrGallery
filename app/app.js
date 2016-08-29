@@ -2,6 +2,7 @@ import { remote, ipcRenderer } from 'electron';
 import fs from 'fs';
 import path from 'path';
 import _ from 'underscore';
+var  FlickrAPI = require('./flickrAPI');
 
 // Lightgallery components
 import { lightGallery } from './lightGallery/js/lightgallery.js';
@@ -14,6 +15,7 @@ import { mousewheel } from './lightGallery/js/mousewheel.js';
 import env from './env';
 
 var app = remote.app;
+var mainWindowWebContents = remote.getCurrentWebContents();
 var lg;
 
 // Lightgallery default settings
@@ -216,6 +218,43 @@ var getFiles = function(files) {
 };
 
 /**
+ * Fetch parsing photos from Flickr
+ * @param  {Array} files - Array contains photos
+ * @return      
+ */
+var getFlickrPhotos = function(files) {
+    el = [];
+    if (files && files.length) {
+        for (var i = 0; i < files.length; i++) {
+            let currentFile = Utils.getFilckrSource(files[i]);
+            console.dir(currentFile);
+            let fileArray = currentFile.split('.');
+            let fileExt = '.' + fileArray[fileArray.length - 1];
+
+            if ( isInListExt(listExt, fileExt) ) {
+                el.push({
+                    src: currentFile,
+                    thumb: './lightgallery/img/lg-default.png'
+                });
+            }
+        };
+    };
+
+    if ($.isArray(el) && el.length) {
+        if ($('.lightgallery').data('lightGallery')) {
+            $('.lightgallery').data('lightGallery').destroy(true);
+        }
+
+        setTimeout(function() {
+            $('.lightgallery').lightGallery($.extend({}, defaults, {
+                dynamicEl: el,
+                index: 0
+            }));
+        }, 100);
+    };
+};
+
+/**
  * @desc reload lightgallery when user changes the settings
  */
 var reload = function() {
@@ -299,3 +338,122 @@ ipcRenderer.on('openedFiles', function(event, arg) {
 ipcRenderer.on('refresh', function(event, arg) {
     reload();
 });
+
+// Listen done search event from main process
+ipcRenderer.on('doneSearch', function(event, arg) {
+    if (arg && arg.length) {
+        getFlickrPhotos(arg);
+    }
+});
+
+
+$(document).ready(function(){
+    // Default: Hide loading screen at initial time
+    UI.stopLoading();
+    // Listen for search form submission
+    $('form#search_form').submit(function(event) {
+        /* Act on the event */
+        event.preventDefault();
+        var keyword = $('form#search_form .input-search').val();
+
+        // Load waiting screen
+        UI.renderLoading();
+        
+        // Add more options: perPage, ...
+        let data = {
+            'keyword': keyword
+        };
+        FlickrAPI.search(data, function(response) {
+            if (response) {
+                // Stop loading screen after search done
+                UI.stopLoading();
+
+                // Send event from remote main window to current render process
+                mainWindowWebContents.send('doneSearch', response.photos.photo);
+
+                // Render new value for layout template
+                Render.updateCurrentPage(response.photos.page);
+                Render.updateTotalPages(response.photos.pages);
+                Render.updatePerPage(response.photos.perpage);
+                Render.updateTotalPhotos(response.photos.total);
+                Render.updateKeyword(keyword);
+
+
+                // var template = $('[__template]');
+
+                // if (template.length > 0) {
+                //     template.html(Utils.replace(template.html(), response));
+                // }
+            }
+        });
+
+        // Refresh form after search
+        $('form#search_form .input-search').val("");
+    });
+
+    $('form#search_form .input-search').keypress(function(e) {
+        if (e.which == 13 || e.keyCode == 13) {
+            $('#search_form').submit();
+            return false;
+        }
+    });
+});
+
+var Render = {
+    updateCurrentPage: function(data) {
+        $('.current-page').html(data);
+    },
+    updateTotalPages: function(data) {
+        $('.total-pages').html(data);
+    },
+    updatePerPage: function(data) {
+        $('.per-page').html(data);
+    },
+    updateTotalPhotos: function(data) {
+        $('.total-photos').html(data);
+    },
+    updateKeyword: function(data) {
+        $('.keyword').html(data);
+    },
+}
+
+var UI = {
+    renderLoading: function() {
+        $('.loading').show();
+    },
+    stopLoading: function() {
+        if ($('.loading')) {
+            $('.loading').hide();
+        }
+    }
+}
+
+var Utils = {
+    replace: function(str, data){
+        return str.replace(/{([^}]+)}/g, function(match, key, offset, old){
+            var _data = null;
+            if (key.indexOf('.') > -1) {
+                var keyArray = key.split('.');
+                _data = data[keyArray[0]];
+
+                for (var i=1; i<keyArray.length; i++) {
+                    _data = _data[keyArray[i]];
+                }
+            } else {
+                _data = data[key];
+            }
+
+            return ((data && _data) ? _data : '');
+        });
+    },
+    // Photo Secret that replied from server is derived from 
+    // main Secret of Original Photo, so we could only get rather than 
+    // Original Photo with 's, q, t, m, n' instead of 'o'
+    getFilckrSource: function(data) {
+        if (data.farm && data.id && data.server && data.secret) {
+            return 'https://farm' + data.farm + '.staticflickr.com//' + data.server + '//' + data.id + '_' + data.secret + '_z.jpg';
+        } else {
+            return '';
+        }
+    }
+}
